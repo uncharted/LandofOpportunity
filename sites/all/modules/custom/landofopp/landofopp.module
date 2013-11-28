@@ -1,0 +1,175 @@
+<?php
+
+/**
+ * @file
+ * LandofOpportunity custom module.
+ * This module describes custome functionality of site.
+ * Add custom search functionality, top search items.
+ * Describe ajax comment functionality of the site.
+ * Add timline functionality to edit events.
+ */
+
+/**
+ * Module includes
+ */
+require_once('landofopp.blocks.inc');
+require_once('landofopp.helpers.inc');
+require_once('landofopp.forms.inc');
+require_once('landofopp.hooks.inc');
+require_once('landofopp.search.inc');
+
+/**
+ * Implements hook_menu().
+ * Creates menu items.
+ * 
+ * @return array
+*/
+function landofopp_menu() {
+  $items = array();
+  // autocomplete for tags
+  $items['tags/autocomplete'] = array(
+    'title' => 'Autocomplete for tags',
+    'page callback' => '_tags_autocomplete',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK
+  );
+  // get form for nodes
+  $items['loo/%node/comment-form'] = array(
+    'title' => 'Get comment form',
+    'page callback' => 'landofopp_get_comment_form',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK
+  );
+  // admin setting for sharing email
+  $items['admin/config/user-interface/sharing-email'] = array(
+    'title' => 'Sharing email',
+    'description' => 'Email setting',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('landofopp_mail_settings'),
+    'access arguments' => array('administer nodes'),
+    'file' => 'landofopp.admin.inc',
+  );
+  // user for iframe timeline
+  $items['timeline'] = array(
+    'title' => 'Timeline',
+    'page callback' => 'landofopp_timeline',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK
+  );
+  // used for search functionality
+  $items['related-search/json'] = array(
+    'title' => 'Related search',
+    'page callback' => 'landofopp_top_search_related',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK ,
+  );
+  
+  return $items;
+  
+}
+/**
+ * Implements hook_theme().
+ * Creates custom template
+ * 
+ * @return array
+ */
+function landofopp_theme() {
+  $items = array();
+  
+  $items['search_custom_page'] = array(
+    'template' => 'tpl/search_page',
+    'variables' => array(),
+  );
+  
+  $items['embed_code'] = array(
+    'template' => 'tpl/embed_code',
+    'variables' => array(),
+  );
+  
+  $items['iframe_code'] = array(
+    'template' => 'tpl/iframe_code',
+    'variables' => array(),
+  );
+
+  $items['timeline'] = array(
+    'template' => 'tpl/timeline',
+    'variables' => array(),
+  );
+  
+  
+  return $items;
+  
+}
+/**
+ * Page callback for timeline used for iframe
+ * @return html string
+ */
+function landofopp_timeline() {
+  $output = theme('timeline');
+  return $output;
+}
+
+/**
+ * Return comment form to node
+ * 
+ * @return html string
+ */
+
+function landofopp_get_comment_form($node) {
+  global $user;
+  $output = '';
+  if ($user->uid <> 0) {
+    $comment_form = drupal_get_form("comment_node_{$node->type}_form", (object) array('nid' => $node->nid));
+    $output = render($comment_form);
+  }
+  echo $output;
+  die();
+}
+
+/**
+ * Update search keyword count or insert new one in loo_top_search table.
+ * This function calls when user submit the search form.
+ */
+function landofopp_top_search_update($keyword) {
+  if (empty($keyword)) return;
+  
+  // get count from keyword;
+  $results = db_query("SELECT count FROM {loo_top_search} WHERE keyword = :keyword", array(':keyword' => $keyword))->fetchAll();
+  
+  $count = 0;
+  foreach ($results as $result) {
+    $count = $result->count;
+  }
+  
+  $count++;
+  
+  $fields = array(
+    'keyword' => $keyword,
+    'count' => $count,
+  );
+  // update count in wcs_top_search table
+  db_merge('loo_top_search')
+    ->key(array('keyword' => $keyword))
+    ->fields($fields)
+    ->execute();
+
+}
+/**
+ * Return related search from $_REQUEST['keywords'].
+ * 
+ * @return JSON output
+ */
+function landofopp_top_search_related() {
+  $string = @$_REQUEST['keywords'];
+  $results = array('keywords' => array());
+  
+  // Related  keywords
+  $result = db_select('loo_top_search')->fields('loo_top_search', array('keyword'))
+          ->condition('keyword', db_like($string) . '%', 'LIKE')
+          ->execute()->fetchCol();
+
+  $results['keywords'] = $result;
+  
+  drupal_json_output($results);
+}
