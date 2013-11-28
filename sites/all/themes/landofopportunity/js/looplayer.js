@@ -1985,7 +1985,7 @@ var looplayer = (function ($) {
 				if (marker.hasClass('active-group')) {
 					var groupID = marker.parent().attr('data-group');
 					showTriggerGroup(groupID);
-				} else showTrigger(marker.attr('data-id'));
+				} else showSingleTrigger(marker.attr('data-id'));
 				if (!iOS) {
 					marker.stop(true,true).addClass('activated').animate({'paddingTop':'37px'},500,function(){
 						marker.addClass('activated');
@@ -2083,7 +2083,7 @@ var looplayer = (function ($) {
 	}
 	
 	// show trigger info
-	function showTrigger(id) {
+	function showSingleTrigger(id) {
 
 		var trigger = $('#popup-'+id);
 		hideVideoTag();
