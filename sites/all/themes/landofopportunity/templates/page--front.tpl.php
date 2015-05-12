@@ -64,13 +64,13 @@
 		<?php endif; ?>
 	</div>
 	<?php //section timeline ?>
-	<?php if (in_array('client administrator', array_values($user->roles))): ?>
+	<?php //if (in_array('client administrator', array_values($user->roles))): ?>
 		<div id="compare" class="section-wrapper compare">
 			<div class="section-inner">
 				<?php include('timeline.php') ?>
 			</div>
 		</div>
-	<?php endif; ?>
+	<?php //endif; ?>
 	<?php //section about and get involved ?>
 	<div class="scroll-wrapper">
 		<div id="about" class="section-wrapper about">
@@ -83,47 +83,47 @@
 				<?php include('get-involved.php') ?>
 			</div>
 		</div>
-		<?php //section footer ?>
-		<div id="footer">
-			<div class="inner-content">
-				<a class="logo" href="#home">Land of Opportunity</a>
-				<div class="menu menu-clearfix">
-					<div class="content">
-						<ul class="right-menu">
-							<li><a class="feedback" href="#feedback">feedback</a></li>
-							<li><a class="email" href="mailto:ludant@joluproductions.com">email</a></li>
-						</ul>
-					</div>
+	</div>
+	<?php //section footer ?>
+	<div id="footer">
+		<div class="inner-content">
+			<a class="logo" href="#home">Land of Opportunity</a>
+			<div class="menu menu-clearfix">
+				<div class="content">
+					<ul class="right-menu">
+						<li><a class="feedback" href="#feedback">feedback</a></li>
+						<li><a class="email" href="mailto:ludant@joluproductions.com">email</a></li>
+					</ul>
 				</div>
-				<div class="menu menu-clearfix">
-					<div class="content">
-						<ul class="footer-menu">
-							<li class="first">&copy; 2013 JoLu Productions. All rights reserved</li>
-							<li><a class="legal" href="#legal">Legal Information</a></li>
-							<li><a class="feedback" href="#feedback">Feedback</a></li>
-						</ul>
-					</div>
-				</div>
-				<p class="copy">Design and development by <a href="http://uncharteddigital.com/">Uncharted Digital</a></p>
 			</div>
-			<?php $feedback_form = module_invoke('webform', 'block_view', 'client-block-58'); ?>
-			<?php
-				$legal_block = block_load('block','7');
-				$legal_render_block = _block_get_renderable_array(_block_render_blocks(array($legal_block)));
-				$legal = drupal_render($legal_render_block);
-			?>
-			<?php if (!empty ($feedback_form['content'])) : ?>
-				<div id="feedback">
-					<h2><?php print render($feedback_form['subject']); ?></h2>
-					<?php print render($feedback_form['content']); ?>
+			<div class="menu menu-clearfix">
+				<div class="content">
+					<ul class="footer-menu">
+						<li class="first">&copy; 2013 JoLu Productions. All rights reserved</li>
+						<li><a class="legal" href="#legal">Legal Information</a></li>
+						<li><a class="feedback" href="#feedback">Feedback</a></li>
+					</ul>
 				</div>
-			<?php endif; ?>
-			<?php if (!empty ($legal)) : ?>
-				<div id="legal">
-					<?php  echo $legal ?>
-				</div>
-			<?php endif; ?>
+			</div>
+			<p class="copy">Design and development by <a href="http://uncharteddigital.com/">Uncharted Digital</a></p>
 		</div>
+		<?php $feedback_form = module_invoke('webform', 'block_view', 'client-block-58'); ?>
+		<?php
+			$legal_block = block_load('block','7');
+			$legal_render_block = _block_get_renderable_array(_block_render_blocks(array($legal_block)));
+			$legal = drupal_render($legal_render_block);
+		?>
+		<?php if (!empty ($feedback_form['content'])) : ?>
+			<div id="feedback">
+				<h2><?php print render($feedback_form['subject']); ?></h2>
+				<?php print render($feedback_form['content']); ?>
+			</div>
+		<?php endif; ?>
+		<?php if (!empty ($legal)) : ?>
+			<div id="legal">
+				<?php  echo $legal ?>
+			</div>
+		<?php endif; ?>
 	</div>
 </div>
 <?php // social login ?>

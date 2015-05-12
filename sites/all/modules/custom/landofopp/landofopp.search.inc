@@ -81,7 +81,7 @@ function landofopp_update_index() {
 function landofopp_search_execute($keys = NULL, $conditions = NULL) {
   //update top_search
   landofopp_top_search_update($keys);
-  $cat_nids = landofopp_get_promoted_categories();
+  //$cat_nids = landofopp_get_promoted_categories();
   // Build matching conditions
   $query = db_select('search_index', 'i', array('target' => 'slave'))->extend('SearchQuery')->extend('PagerDefault');
   $query->join('node', 'n', 'n.nid = i.sid');
@@ -101,11 +101,11 @@ function landofopp_search_execute($keys = NULL, $conditions = NULL) {
     return array();
   }
   $query->condition('n.type', 'rich_media');
-  $query->condition('n.promote', 1);
-  if ($cat_nids) {
+  //$query->condition('n.promote', 1);
+  /*if ($cat_nids) {
     $query->leftJoin('field_data_field_category', 'fc', 'n.nid = fc.entity_id');
     $query->condition('fc.field_category_target_id', $cat_nids, 'in');
-  }
+  }*/
   
   // Add the ranking expressions.
   _node_rankings($query);

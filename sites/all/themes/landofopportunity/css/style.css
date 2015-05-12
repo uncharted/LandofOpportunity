@@ -753,7 +753,6 @@ em{
 }
 #page-wrapper .section div.timeline-top h2,
 #page-wrapper .section div.timeline-bottom h2{
-	/*font: 700 144px/130px "alternate-gothic-no-1-d", "Open Sans", Arial, Helvetica, sans-serif;*/
 	font: 700 100px/130px "Oswald", "Open Sans", Arial, Helvetica, sans-serif;
 	margin: -9999px 0 0;
 	z-index: 10;
@@ -1298,8 +1297,10 @@ em{
 	height: 144px;
 	overflow: hidden;
 	background: url(../images/bg-footer.png) repeat 0 0;
-	position: relative;
+	position: fixed;
 	z-index: 20;
+	left: 0;
+	bottom: 0;
 }
 #footer a.logo{
 	background: url(../images/logo-footer.png) no-repeat 0 0;

@@ -160,6 +160,8 @@ $(document).ready(function(){
 });
 
 $(window).load(function(){
+	WindowWidth = viewport().width;
+	WindowHeight = viewport().height;
 	var hash = window.location.hash;
 	if (hash) {
 		InitPlayerOnHash(hash);
@@ -300,7 +302,7 @@ function initSectionsResize(){
 						var image_height,image_width;
 						if(container_ratio < image_ratio){
 							image_height = WindowHeight-74;
-							image_width = parseInt(container_ratio*image_height);
+							image_width = parseInt(image_ratio*image_height);
 						}
 						else{
 							image_width = '100%';
@@ -323,7 +325,7 @@ function initSectionsResize(){
 					var image_height,image_width;
 					if(container_ratio < image_ratio){
 						image_height = WindowHeight-74;
-						image_width = parseInt(container_ratio*image_height);
+						image_width = parseInt(image_ratio*image_height);
 					}
 					else{
 						image_width = '100%';
@@ -423,7 +425,7 @@ function initSectionsResize(){
 						var image_height,image_width;
 						if(container_ratio < image_ratio){
 							image_height = WindowHeight-74;
-							image_width = parseInt(container_ratio*image_height);
+							image_width = parseInt(image_ratio*image_height);
 						}
 						else{
 							image_width = '100%';
@@ -446,7 +448,7 @@ function initSectionsResize(){
 					var image_height,image_width;
 					if(container_ratio < image_ratio){
 						image_height = WindowHeight-74;
-						image_width = parseInt(container_ratio*image_height);
+						image_width = parseInt(image_ratio*image_height);
 					}
 					else{
 						image_width = container_width;
@@ -529,6 +531,7 @@ function initSectionsResize(){
 	// get involved
 	if($('#get-involved').get(0)){
 		// set links position to scroll to on click
+		//var get_involved_start = about_start + parseInt($('#about .views-row.cycle-slide-active').height() + 500 + 100);
 		var get_involved_start = about_start + parseInt($('#about .views-row.cycle-slide-active').height() + 500 + 100);
 		$('#header div.menu div.content ul li a.get-involved').attr('data-menu-top',get_involved_start);
 	}
@@ -865,9 +868,16 @@ function initSections(){
 		$('.scroll-wrapper').attr('data-0','z-index:0;');
 		var pre_scroll_start = scroll_start - 1000;
 		$('.scroll-wrapper').attr('data-'+pre_scroll_start,'z-index:0;');
-		var get_involved_start = scroll_start+slider_height+500+100-205;
+		//var get_involved_start = scroll_start+slider_height+500+100-205;
+		var get_involved_start = scroll_start+slider_height + 205;
 		$('#header div.menu div.content ul li a.get-involved').attr('data-menu-top',get_involved_start);
 	}
+
+	// footer
+	if($('#footer').get(0)){
+		$('#footer').attr('data-144-end','bottom:-144px').attr('data-end','bottom:0px');
+	}
+
 }
 
 // set active menu item and hash
@@ -889,10 +899,10 @@ function initActiveSection(){
 					current_section = parseInt($('#dig-deeper').height()+ WindowHeight*2 + scroll_offset);
 				}
 				if($(this).hasClass('about')){
-					current_section = parseInt($('.section-wrapper.intro').height()+$('.section-wrapper.info').height()+$('.section-wrapper.dig-deeper').height()+$('.section-wrapper.compare').height()+500);
+					current_section = parseInt($('.section-wrapper.intro').height()+$('.section-wrapper.info').height()+$('.section-wrapper.dig-deeper').height()+$('.section-wrapper.compare').height()-500);
 				}
 				if($(this).hasClass('get-involved')){
-					current_section = parseInt($('.section-wrapper.intro').height()+$('.section-wrapper.info').height()+$('.section-wrapper.dig-deeper').height()+$('.section-wrapper.compare').height()+$('#about .views-row.cycle-slide-active').height() + 500 - 100);
+					current_section = parseInt($('.section-wrapper.intro').height()+$('.section-wrapper.info').height()+$('.section-wrapper.dig-deeper').height()+$('.section-wrapper.compare').height()+$('#about .views-row.cycle-slide-active').height() - 100);
 				}
 				$(this).addClass('active');
 				$.scrollTo(current_section, 500);
@@ -957,7 +967,7 @@ function initActiveSection(){
 				var compare_start = parseInt($('#dig-deeper').height()+ WindowHeight + scroll_offset*2 -50);
 				var timeline_start = timeline_end = 0;
 				var about_start = parseInt($('.section-wrapper.intro').height()+$('.section-wrapper.info').height()+$('.section-wrapper.dig-deeper').height()+$('.section-wrapper.compare').height()-500-50);
-				var get_involved_start = parseInt($('.section-wrapper.intro').height()+$('.section-wrapper.info').height()+$('.section-wrapper.dig-deeper').height()+$('.section-wrapper.compare').height()+$('#about .views-row.cycle-slide-active').height());
+				var get_involved_start = parseInt($('.section-wrapper.intro').height()+$('.section-wrapper.info').height()+$('.section-wrapper.dig-deeper').height()+$('.section-wrapper.compare').height()+$('#about .view-about > .view-content > .cycle-slide-active').height() - 300);
 
 				if ($('#compare').get(0)){
 					var compare_data = $('#compare').data();
@@ -1050,7 +1060,8 @@ function initActiveSection(){
 
 				// update hash
 				if(window.location.hash !== hash){
-					window.location.hash = hash;
+					setTimeout(function() { window.location.hash = hash; }, 500);
+					// window.location.hash = hash;
 				}
 
 				// hide compare videos when not in compare section
@@ -1073,6 +1084,8 @@ function initActiveSection(){
 			$('#header div.menu div.content ul li.about ul li a').each(function(index){
 				if($(this).attr('rel') == hash){
 					$('#about div.slider > .view-about > .view-content').cycle('goto', index);
+					current_section = parseInt($('.section-wrapper.intro').height()+$('.section-wrapper.info').height()+$('.section-wrapper.dig-deeper').height()+$('.section-wrapper.compare').height()-500);
+					$.scrollTo(current_section, 500);
 				}
 			});
 		}
@@ -1097,7 +1110,7 @@ function initSlider(){
 	}
 
 	// about slider
-	if($('#about div.slider div.item').size() > 1){
+	if($('#about div.slider div.item').size() > 1){	
 		var window_offset = parseInt(WindowHeight);
 		var content_offset = parseInt(window_offset/2);
 		$('#about section.about').prepend('<a href="#/about" class="cycle-prev">prev</a><a href="#/about" class="cycle-next">next</a>');
@@ -1362,6 +1375,7 @@ function initBackgroundVideo(){
 	var window_ratio = WindowWidth/WindowHeight;
 	// video resize
 	$('#page-wrapper video.video-bg').each(function(index){
+		
 		var rawWidth = $(this).prop('videoWidth');
 		var rawHeight = $(this).prop('videoHeight');
 		var video_ratio = rawWidth/rawHeight;

@@ -19,15 +19,15 @@ Drupal.behaviors.mediaElement = {
       if (options.global != undefined) {
         var globalOptions = options.global;
       }
-    var widget = this;
+      var widget = this;
       //options = Drupal.settings.media.fields[this.id];
       var fidField = $('.fid', this);
       var previewField = $('.preview', this);
       var editButton = $('.edit', this);
       var removeButton = $('.remove', this);
-    var mediaWidget = $(this);
-    var previewVideo = $('.preview_video', this);
-    var videoID;
+      var mediaWidget = $(this);
+      var previewVideo = $('.preview_video', this);
+      var videoID;
     
     if (previewVideo.get(0)) {
       videoID = previewVideo.attr('data-id');

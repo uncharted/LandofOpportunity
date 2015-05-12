@@ -38,9 +38,9 @@
 						</div>
 					<?php endif; ?>
 				</li>
-				<?php if (in_array('client administrator', array_values($user->roles))): ?>
+				<?php //if (in_array('client administrator', array_values($user->roles))): ?>
 					<li><a class="compare" href="#compare" rel="#/compare">Compare</a></li>
-				<?php endif; ?>
+				<?php //endif; ?>
 				<li class="about expanded">
 					<a class="about expanded" href="#about" rel="#/about">About</a>
 					<div class="drop">
