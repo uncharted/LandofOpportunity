@@ -1536,6 +1536,9 @@ var looplayer = (function ($) {
 					buildVideoPlayer();
 				} else {
 					rmv.on('loadedmetadata', function() {
+						if (iOS) {
+							rmv.play();
+						}
 						$.fancybox.hideLoading();
 						buildVideoPlayer();
 					});
@@ -1724,6 +1727,9 @@ var looplayer = (function ($) {
 			buildVideoPlayer();
 		} else {
 			rmv.on('loadedmetadata', function() {
+				if (iOS) {
+					rmv.play();
+				}
 				buildVideoPlayer();
 			});
 		}
@@ -1859,6 +1865,9 @@ var looplayer = (function ($) {
 					buildVideoPlayer();
 				} else {
 					rmv.on('loadedmetadata', function() {
+						if (iOS) {
+							rmv.play();
+						}
 						buildVideoPlayer();
 					});
 				}
@@ -2457,7 +2466,6 @@ var looplayer = (function ($) {
 		init : function(conf){
 			config = conf;
 			
-			
 			var videoId = conf.videoId;  // get videoID
 			var url;
 			var loadvideo = false;
@@ -2496,13 +2504,26 @@ var looplayer = (function ($) {
 			} else if ($('#'+videoId).hasClass('vimeo')) {
 				url = $('#'+videoId).attr('data-url');
 				rmv = Popcorn.vimeo( '#'+videoId,url);
-				if (!iOS && !iframeMode) rmv.play(); ; // autoplay if not iOS
-				
+				if (!iOS && !iframeMode) rmv.play(); // autoplay if not iOS
 			} else {
 				rmv = Popcorn( '#'+videoId);
 			}
 			
-			
+						// if video has metadata call function handleCanplay
+			if (rmv.duration()) {
+				loadvideo = true;
+				buildVideoPlayer();
+			} else {
+       			rmv.on('loadedmetadata', function() {
+					if (iOS) {
+						rmv.play();
+					}
+					loadvideo = true;
+					buildVideoPlayer();
+				});
+				
+			}
+      
 			initControls(); // initialize controls bar for player
 			
 			if ($.browser.msie) { 
@@ -2514,18 +2535,6 @@ var looplayer = (function ($) {
 			if (iOS) {
 				hideControls(); 
 				resizeVideo();
-			}
-			
-			// if video has metadata call function handleCanplay
-			if (rmv.duration()) {
-				loadvideo = true;
-				buildVideoPlayer();
-			} else {
-				rmv.on('loadedmetadata', function() {
-					loadvideo = true;
-					buildVideoPlayer();
-				});
-				
 			}
 			
 			// if video cann't play for this host show error for vimeo video

@@ -160,6 +160,7 @@
 		}
 	}
 
+  $comment_form = ''; // Remove the ability to comment from the video player
 
 	$comments = landofopp_get_comment_from_richmedia($node);
 	$cat_id = landofopp_get_field_value($node,'field_category','target_id');

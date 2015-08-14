@@ -91,7 +91,7 @@
 			<div class="menu menu-clearfix">
 				<div class="content">
 					<ul class="right-menu">
-						<li><a class="feedback" href="#feedback">feedback</a></li>
+						<!--<li><a class="feedback" href="#feedback">feedback</a></li>-->
 						<li><a class="email" href="mailto:ludant@joluproductions.com">email</a></li>
 					</ul>
 				</div>
@@ -101,13 +101,13 @@
 					<ul class="footer-menu">
 						<li class="first">&copy; 2013 JoLu Productions. All rights reserved</li>
 						<li><a class="legal" href="#legal">Legal Information</a></li>
-						<li><a class="feedback" href="#feedback">Feedback</a></li>
+						<!--<li><a class="feedback" href="#feedback">Feedback</a></li>-->
 					</ul>
 				</div>
 			</div>
 			<p class="copy">Design and development by <a href="http://uncharteddigital.com/">Uncharted Digital</a></p>
 		</div>
-		<?php $feedback_form = module_invoke('webform', 'block_view', 'client-block-58'); ?>
+		<?php $feedback_form = array(); //$feedback_form = module_invoke('webform', 'block_view', 'client-block-58'); ?>
 		<?php
 			$legal_block = block_load('block','7');
 			$legal_render_block = _block_get_renderable_array(_block_render_blocks(array($legal_block)));

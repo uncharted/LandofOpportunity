@@ -1,5 +1,4 @@
-<?php
-/**
+<?php                                                                                                                                                             /**
  * @file
  * LandofOpportunity theme implementation to display timeline template.
  *
@@ -37,7 +36,7 @@
       </div>
       <div class="text-wrapper">
         <div class="text">
-          <h2>What if we could use our past to predict our future</h2>
+          <h2>How can the next one be different?</h2>
           <a class="arrow" href="#predict">Learn More</a>
         </div>
       </div>
