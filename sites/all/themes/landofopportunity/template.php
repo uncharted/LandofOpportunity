@@ -162,9 +162,10 @@ function landofopportunity_preprocess_node(&$variables) {
   }
   // form email for RMV
   if ($variables['node']->type == 'rich_media') {
-    $form_send = drupal_get_form('landofopp_send_email', $variables['node']->nid);
+    /*$form_send = drupal_get_form('landofopp_send_email', $variables['node']->nid);
     $form = render($form_send);
-    $variables['form_email'] = $form;
+    $variables['form_email'] = $form;*/
+    $variables['form_email'] = '';
   }
 
 }

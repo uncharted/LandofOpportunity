@@ -47,7 +47,6 @@ var looplayer = (function ($) {
 		if (typeof timepoint != 'undefined' ) {
 			startTime = parseInt(timepoint);
 		}
-		
 		resizeVideo(); 
 		
 		//reset parametrs
@@ -1511,11 +1510,17 @@ var looplayer = (function ($) {
 				// initialize popcorn js for different player type
 				if ($('#'+videoId).hasClass('youtube')) {
 					url = $('#'+videoId).attr('data-url')+'&controls=0&rel=0&showinfo=0';
-					rmv = Popcorn.youtube( '#'+videoId,url);
+					var wrapper = Popcorn.HTMLVimeoVideoElement('#'+videoId);
+					wrapper.src = url;
+					rmv = Popcorn(wrapper);
+					//rmv = Popcorn.youtube( '#'+videoId,url);
 					if (!iOS) rmv.play();
 				} else if ($('#'+videoId).hasClass('vimeo')) {
 					url = $('#'+videoId).attr('data-url');
-					rmv = Popcorn.vimeo( '#'+videoId,url);
+					var wrapper = Popcorn.HTMLVimeoVideoElement('#'+videoId);
+					wrapper.src = url;
+					rmv = Popcorn(wrapper);
+					//rmv = Popcorn.vimeo( '#'+videoId,url);
 					if (!iOS) rmv.play();
 				} else {
 					rmv = Popcorn( '#'+videoId);
@@ -1699,11 +1704,17 @@ var looplayer = (function ($) {
 		// initialize popcorn js for different player type
 		if ($('#'+videoId).hasClass('youtube')) {
 			url = $('#'+videoId).attr('data-url')+'&controls=0&rel=0&showinfo=0';
-			rmv = Popcorn.youtube( '#'+videoId,url);
+			var wrapper = Popcorn.HTMLVimeoVideoElement('#'+videoId);
+			wrapper.src = url;
+			rmv = Popcorn(wrapper);
+			//rmv = Popcorn.youtube( '#'+videoId,url);
 			rmv.play();
 		} else if ($('#'+videoId).hasClass('vimeo')) {
 			url = $('#'+videoId).attr('data-url');
-			rmv = Popcorn.vimeo( '#'+videoId,url);
+			var wrapper = Popcorn.HTMLVimeoVideoElement('#'+videoId);
+			wrapper.src = url;
+			rmv = Popcorn(wrapper);
+			//rmv = Popcorn.vimeo( '#'+videoId,url);
 			rmv.play();
 		} else {
 			rmv = Popcorn( '#'+videoId);
@@ -1841,11 +1852,17 @@ var looplayer = (function ($) {
 				// html previous video
 				if ($('#'+videoId).hasClass('youtube')) {
 					url = $('#'+videoId).attr('data-url')+'&controls=0&rel=0&showinfo=0';
-					rmv = Popcorn.youtube( '#'+videoId,url);
+					var wrapper = Popcorn.HTMLVimeoVideoElement('#'+videoId);
+					wrapper.src = url;
+					rmv = Popcorn(wrapper);
+					//rmv = Popcorn.youtube( '#'+videoId,url);
 					if (!iOS) rmv.play();
 				} else if ($('#'+videoId).hasClass('vimeo')) {
 					url = $('#'+videoId).attr('data-url');
-					rmv = Popcorn.vimeo( '#'+videoId,url);
+					var wrapper = Popcorn.HTMLVimeoVideoElement('#'+videoId);
+					wrapper.src = url;
+					rmv = Popcorn(wrapper);
+					//rmv = Popcorn.vimeo( '#'+videoId,url);
 					if (!iOS) rmv.play();
 				} else {
 					rmv = Popcorn( '#'+videoId);
@@ -2231,7 +2248,6 @@ var looplayer = (function ($) {
 		hideGradient();
 		showVideoTag();
 		if (ended && iscounterpaused) {
-			console.log('enableCouner');
 			enableCouner();
 		}
 	}
@@ -2495,21 +2511,24 @@ var looplayer = (function ($) {
 			if ($videoBox.find('div.next-video').get(0)) {
 				config.nextVideo =  $videoBox.find('div.next-video').html(); // html for next video
 			}
-			
 			// initialize popcorn js for different player type
 			if ($('#'+videoId).hasClass('youtube')) {
 				url = $('#'+videoId).attr('data-url')+'&controls=0&rel=0&showinfo=0';
-				rmv = Popcorn.youtube( '#'+videoId,url);
+				var wrapper = Popcorn.HTMLVimeoVideoElement('#'+videoId);
+				wrapper.src = url;
+				rmv = Popcorn(wrapper);
 				if (!iOS && !iframeMode) rmv.play(); // autoplay if not iOS
 			} else if ($('#'+videoId).hasClass('vimeo')) {
 				url = $('#'+videoId).attr('data-url');
-				rmv = Popcorn.vimeo( '#'+videoId,url);
+				var wrapper = Popcorn.HTMLVimeoVideoElement('#'+videoId);
+				wrapper.src = url;
+				rmv = Popcorn(wrapper);
 				if (!iOS && !iframeMode) rmv.play(); // autoplay if not iOS
 			} else {
 				rmv = Popcorn( '#'+videoId);
 			}
 			
-						// if video has metadata call function handleCanplay
+			// if video has metadata call function handleCanplay
 			if (rmv.duration()) {
 				loadvideo = true;
 				buildVideoPlayer();

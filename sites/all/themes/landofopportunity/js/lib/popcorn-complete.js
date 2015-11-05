@@ -5293,6 +5293,7 @@
       timeUpdateInterval,
       currentTimeInterval,
       lastCurrentTime = 0;
+      play = false;
 
     // Namespace all events we'll produce
     self._eventNamespace = Popcorn.guid( "HTMLVimeoVideoElement::" );
@@ -5516,6 +5517,11 @@
           if( duration > 0 && !playerReady ) {
             playerReady = true;
             player.pause();
+            player.setVolume( 1 );
+            // Switch message pump to use run-time message callback vs. startup
+            window.removeEventListener( "message", startupMessage, false );
+            window.addEventListener( "message", onStateChange, false );
+            onPlayerReady();
           }
           break;
         case "pause":
@@ -5564,6 +5570,10 @@
           updateDuration( parseFloat( data.data.duration ) );
           break;
         case "playProgress":
+         if(!play && data.data.seconds > 0) {
+               play = true;
+               onPlay();
+         }
           onCurrentTime( parseFloat( data.data.seconds ) );
           break;
         case "play":

@@ -533,7 +533,7 @@ function initSectionsResize(){
 		// set links position to scroll to on click
 		//var get_involved_start = about_start + parseInt($('#about .views-row.cycle-slide-active').height() + 500 + 100);
 		var get_involved_start = about_start + parseInt($('#about .views-row.cycle-slide-active').height() + 500 + 100);
-		$('#header div.menu div.content ul li a.get-involved').attr('data-menu-top',get_involved_start);
+		$('#header div.data-menu-top div.content ul li a.get-involved').attr('data-menu-top',get_involved_start);
 	}
 
 	// scroll to section after window resize
@@ -1216,6 +1216,15 @@ function initProtagonists(){
 
 // element hovers
 function initHovers(){
+	//menu hover
+	$('#header div.menu div.content > ul > li').hover(
+		function(){
+			$('#header').addClass('hover');
+		},
+		function(){
+			$('#header').removeClass('hover');
+		}
+	);
 	// video hovers
 	$('#page-wrapper .section div.video').on('touchend', function(){
 		$('#page-wrapper .section div.video').find('div.overlay').fadeIn(300);
@@ -1807,9 +1816,9 @@ function initTypeToSearch() {
 		if (hash) {
 			window.location.hash = hash;
 			CurrentHash = hash;
-			if (hash == '#/compare'){
+			/*if (hash == '#/compare'){
 				$('#compare a.close').click();
-			}
+			}*/
 		}
 		if (scrollTop != undefined) {
 			$.scrollTo(scrollTop , 0);
